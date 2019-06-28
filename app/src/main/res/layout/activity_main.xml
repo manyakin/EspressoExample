@@ -8,7 +8,7 @@
 
     <fragment
             android:id="@+id/main_fragment"
-            android:name="ru.anikey.mymindcards.MainFragment"
+            android:name="ru.anikey.mymindcards.presentation.main.MainFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
