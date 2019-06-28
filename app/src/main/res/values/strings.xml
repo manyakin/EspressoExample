@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Common strings -->
+    <string name="app_name">Карточки запоминалки</string>
+
+    <!-- Main fragment strings -->
+    <string name="main_add_btn">Добавить</string>
+    <string name="main_start_btn">Начать тест</string>
+    <string name="main_card_title">Карточка %1$d</string>
+
+</resources>
