@@ -1,9 +1,10 @@
-package ru.anikey.mymindcards
+package ru.anikey.mymindcards.activities
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.arellomobile.mvp.MvpAppCompatActivity
+import ru.anikey.mymindcards.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : MvpAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

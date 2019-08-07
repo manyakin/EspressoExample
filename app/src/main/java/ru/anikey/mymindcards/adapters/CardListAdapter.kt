@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_item.view.*
 import ru.anikey.mymindcards.R
-import kotlin.random.Random
+import ru.anikey.mymindcards.models.CardModel
 
-class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardListVH>() {
+class CardListAdapter(private val cardList: List<CardModel>) : RecyclerView.Adapter<CardListAdapter.CardListVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardListVH {
         return CardListVH(
@@ -18,7 +18,7 @@ class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardListVH>() {
     }
 
     override fun getItemCount(): Int {
-        return 50
+        return cardList.size
     }
 
     override fun onBindViewHolder(holder: CardListVH, position: Int) {
@@ -30,16 +30,8 @@ class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardListVH>() {
         private val description = itemView.card_text
 
         fun bind(position: Int) {
-            title.text = itemView.resources.getString(R.string.main_card_title, position + 1)
-            description.text = randomDescription[Random.nextInt(randomDescription.size)]
+            title.text = cardList[position].title
+            description.text = cardList[position].question
         }
-
-        // todo: реализовать базу карточек
-        private val randomDescription = listOf(
-            "Например такое описание",
-            "Или например такое описание подлиннее",
-            "Ну или очень длинное описание, чтобы проверить размер карточек и всякое тому подобное",
-            "Или немного"
-        )
     }
 }
