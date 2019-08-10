@@ -7,4 +7,5 @@ interface MainView : MvpView {
     fun showList(list: List<CardModel>)
     fun startAddCardActivity()
     fun startTest()
+    fun onCardClicked()
 }

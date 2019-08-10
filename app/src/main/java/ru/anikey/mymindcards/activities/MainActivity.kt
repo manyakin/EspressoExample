@@ -56,6 +56,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun startTest() {
     }
 
+    override fun onCardClicked() {
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
             mPresenter.initCardList()

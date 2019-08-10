@@ -12,7 +12,6 @@ import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.custom.CustomTextInputLayout
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.AddCardPresenter
-import ru.anikey.mymindcards.repositories.MainRepository
 import ru.anikey.mymindcards.views.AddCardView
 
 class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
@@ -44,6 +43,11 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         }
     }
 
+    override fun cardSaved() {
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
+
     /**
      * =============================================================================================
      * Support
@@ -60,9 +64,7 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
                     question = mQestion.edit_text.text.toString(),
                     answer = mAnswer.edit_text.text.toString()
             )
-            MainRepository.addCard(card)
-            setResult(Activity.RESULT_OK)
-            finish()
+            mPresenter.saveCard(card)
         }
     }
 
