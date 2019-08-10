@@ -14,4 +14,13 @@ object MainRepository {
     fun addCard(card: CardModel) {
         cards.add(card)
     }
+
+    fun editCard(card: CardModel, position: Int) {
+        cards[position] = card
+    }
+
+    fun getCard(position: Int): CardModel {
+        return cards[position]
+    }
+
 }

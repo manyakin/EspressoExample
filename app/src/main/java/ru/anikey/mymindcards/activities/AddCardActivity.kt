@@ -12,6 +12,8 @@ import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.custom.CustomTextInputLayout
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.AddCardPresenter
+import ru.anikey.mymindcards.utils.ARG_CARD
+import ru.anikey.mymindcards.utils.ARG_POSITION
 import ru.anikey.mymindcards.views.AddCardView
 
 class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
@@ -20,12 +22,21 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
     private lateinit var mAnswer: CustomTextInputLayout
     private lateinit var mSave: Button
 
+    private enum class Mode {
+        ADD, EDIT
+    }
+
+    private lateinit var mode: Mode
+    private var mCard: CardModel? = null
+    private var mPosition: Int? = null
+
     @InjectPresenter
     lateinit var mPresenter: AddCardPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_card)
+        initExtras()
         initViews()
     }
 
@@ -60,11 +71,14 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         mAnswer.validate()
         if (!mTitle.isEmpty && !mQestion.isEmpty && !mAnswer.isEmpty) {
             val card = CardModel(
-                    title = mTitle.edit_text.text.toString(),
-                    question = mQestion.edit_text.text.toString(),
-                    answer = mAnswer.edit_text.text.toString()
+                title = mTitle.edit_text.text.toString(),
+                question = mQestion.edit_text.text.toString(),
+                answer = mAnswer.edit_text.text.toString()
             )
-            mPresenter.saveCard(card)
+            when (mode) {
+                Mode.ADD -> mPresenter.saveCard(card)
+                Mode.EDIT -> mPresenter.editCard(card, mPosition!!)
+            }
         }
     }
 
@@ -73,7 +87,28 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         mQestion = question_fld
         mAnswer = answer_fld
 
+        mCard?.let { card ->
+            mTitle.setText(card.title)
+            mQestion.setText(card.question)
+            mAnswer.setText(card.answer)
+        }
+
+        title = when (mode) {
+            Mode.ADD -> getString(R.string.add_card_toolbar_title)
+            Mode.EDIT -> getString(R.string.edit_card_toolbar_title)
+        }
+
         mSave = save_card_btn
         mSave.setOnClickListener(this)
+    }
+
+    private fun initExtras() {
+        if (intent.extras != null) {
+            mode = Mode.EDIT
+            mCard = intent.extras!!.getParcelable<CardModel?>(ARG_CARD)
+            mPosition = intent.extras!!.getInt(ARG_POSITION)
+        } else {
+            mode = Mode.ADD
+        }
     }
 }

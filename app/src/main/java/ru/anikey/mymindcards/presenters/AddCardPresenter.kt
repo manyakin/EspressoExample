@@ -13,4 +13,9 @@ class AddCardPresenter : MvpPresenter<AddCardView>() {
         MainRepository.addCard(card)
         viewState.cardSaved()
     }
+
+    fun editCard(card: CardModel, position: Int) {
+        MainRepository.editCard(card, position)
+        viewState.cardSaved()
+    }
 }

@@ -38,6 +38,10 @@ class CustomTextInputLayout @JvmOverloads constructor(
         runValidation()
     }
 
+    fun setText(text: String) {
+        editText.setText(text)
+    }
+
     /**
      * =============================================================================================
      * Callbacks

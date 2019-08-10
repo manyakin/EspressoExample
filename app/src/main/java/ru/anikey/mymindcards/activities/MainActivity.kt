@@ -13,6 +13,8 @@ import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.adapters.CardListAdapter
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.MainPresenter
+import ru.anikey.mymindcards.utils.ARG_CARD
+import ru.anikey.mymindcards.utils.ARG_POSITION
 import ru.anikey.mymindcards.utils.CODE_ADD_CARD_ACTIVITY
 import ru.anikey.mymindcards.views.MainView
 
@@ -44,7 +46,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun showList(list: List<CardModel>) {
         main_card_list.setHasFixedSize(true)
-        main_card_list.adapter = CardListAdapter(list)
+        main_card_list.adapter = CardListAdapter(list, this)
         main_card_list.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
     }
 
@@ -53,10 +55,18 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         startActivityForResult(intent, CODE_ADD_CARD_ACTIVITY)
     }
 
+    override fun startEditCardActivity(card: CardModel, position: Int) {
+        val intent = Intent(this, AddCardActivity::class.java)
+        intent.putExtra(ARG_CARD, card)
+        intent.putExtra(ARG_POSITION, position)
+        startActivityForResult(intent, CODE_ADD_CARD_ACTIVITY)
+    }
+
     override fun startTest() {
     }
 
-    override fun onCardClicked() {
+    override fun onCardClicked(position: Int) {
+        mPresenter.getClickedCard(position)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

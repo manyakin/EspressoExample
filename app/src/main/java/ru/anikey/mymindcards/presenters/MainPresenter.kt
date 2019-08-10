@@ -16,4 +16,9 @@ class MainPresenter : MvpPresenter<MainView>() {
         viewState.startAddCardActivity()
     }
 
+    fun getClickedCard(position: Int) {
+        val card = MainRepository.getCard(position)
+        viewState.startEditCardActivity(card, position)
+    }
+
 }
