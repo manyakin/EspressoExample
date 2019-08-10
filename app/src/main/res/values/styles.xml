@@ -4,13 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@android:color/holo_red_dark</item>
     </style>
 
     <!-- Add card fragment -->
     <style name="AddCardFieldStyle">
         <item name="android:layout_margin">8dp</item>
-        <item name="android:layout_width">320dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="errorEnabled">true</item>
     </style>

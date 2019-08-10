@@ -1,33 +1,33 @@
-package ru.anikey.mymindcards.fragments
+package ru.anikey.mymindcards.activities
 
-
+import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import com.arellomobile.mvp.MvpAppCompatDialogFragment
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.activity_add_card.*
 import kotlinx.android.synthetic.main.custom_edit_text.view.*
-import kotlinx.android.synthetic.main.fragment_add_card.view.*
 import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.custom.CustomTextInputLayout
 import ru.anikey.mymindcards.models.CardModel
+import ru.anikey.mymindcards.presenters.AddCardPresenter
 import ru.anikey.mymindcards.repositories.MainRepository
+import ru.anikey.mymindcards.views.AddCardView
 
-class AddCardFragment(private val repository: MainRepository) : MvpAppCompatDialogFragment(), View.OnClickListener {
+class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
     private lateinit var mTitle: CustomTextInputLayout
     private lateinit var mQestion: CustomTextInputLayout
     private lateinit var mAnswer: CustomTextInputLayout
     private lateinit var mSave: Button
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    @InjectPresenter
+    lateinit var mPresenter: AddCardPresenter
 
-        val root = inflater.inflate(R.layout.fragment_add_card, container, false)
-        initViews(root)
-        return root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add_card)
+        initViews()
     }
 
     /**
@@ -56,22 +56,22 @@ class AddCardFragment(private val repository: MainRepository) : MvpAppCompatDial
         mAnswer.validate()
         if (!mTitle.isEmpty && !mQestion.isEmpty && !mAnswer.isEmpty) {
             val card = CardModel(
-                title = mTitle.edit_text.text.toString(),
-                question = mQestion.edit_text.text.toString(),
-                answer = mAnswer.edit_text.text.toString()
+                    title = mTitle.edit_text.text.toString(),
+                    question = mQestion.edit_text.text.toString(),
+                    answer = mAnswer.edit_text.text.toString()
             )
-            repository.addCard(card)
-            dismiss()
+            MainRepository.addCard(card)
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 
-    private fun initViews(root: View) {
-        mTitle = root.title_fld
-        mQestion = root.question_fld
-        mAnswer = root.answer_fld
+    private fun initViews() {
+        mTitle = title_fld
+        mQestion = question_fld
+        mAnswer = answer_fld
 
-        mSave = root.save_card_btn
+        mSave = save_card_btn
         mSave.setOnClickListener(this)
     }
-
 }
