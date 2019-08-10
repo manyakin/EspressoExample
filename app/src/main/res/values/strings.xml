@@ -8,4 +8,14 @@
     <string name="main_start_btn">Начать тест</string>
     <string name="main_card_title">Карточка %1$d</string>
 
+    <!-- Add card fragment strings -->
+    <string name="add_card_title">Заголовок</string>
+    <string name="add_card_question">Вопрос</string>
+    <string name="add_card_answer">Ответ</string>
+    <string name="add_card_save">Сохранить</string>
+
+    <string name="add_card_title_error">Введите заголовок</string>
+    <string name="add_card_question_error">Введите вопрос</string>
+    <string name="add_card_answer_error">Введите ответ</string>
+
 </resources>

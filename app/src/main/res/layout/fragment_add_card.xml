@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical"
+              tools:context=".fragments.AddCardFragment">
+
+    <ru.anikey.mymindcards.custom.CustomTextInputLayout
+            android:id="@+id/title_fld"
+            style="@style/AddCardFieldStyle"
+            app:input_error="@string/add_card_title_error"
+            app:placeholder="@string/add_card_title"/>
+
+    <ru.anikey.mymindcards.custom.CustomTextInputLayout
+            android:id="@+id/question_fld"
+            style="@style/AddCardFieldStyle"
+            app:input_error="@string/add_card_question_error"
+            app:placeholder="@string/add_card_question"/>
+
+    <ru.anikey.mymindcards.custom.CustomTextInputLayout
+            android:id="@+id/answer_fld"
+            style="@style/AddCardFieldStyle"
+            app:input_error="@string/add_card_answer_error"
+            app:placeholder="@string/add_card_answer"/>
+
+    <Button
+            android:id="@+id/save_card_btn"
+            style="@style/AddCardFieldStyle"
+            android:text="@string/add_card_save"/>
+
+</LinearLayout>

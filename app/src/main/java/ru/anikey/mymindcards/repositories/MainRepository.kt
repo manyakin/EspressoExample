@@ -3,8 +3,8 @@ package ru.anikey.mymindcards.repositories
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.MainPresenter
 
-class MainRepository(val mPresenter: MainPresenter) {
-    private val cards = listOf(
+class MainRepository(private val mPresenter: MainPresenter) {
+    val cards = mutableListOf(
         CardModel("First", "First question", "First answer"),
         CardModel("Second", "Second question", "Second answer"),
         CardModel("Third", "Third question", "Third answer"),
@@ -13,6 +13,11 @@ class MainRepository(val mPresenter: MainPresenter) {
     )
 
     fun loadCards() {
+        mPresenter.buildList(cards)
+    }
+
+    fun addCard(card: CardModel) {
+        cards.add(card)
         mPresenter.buildList(cards)
     }
 }

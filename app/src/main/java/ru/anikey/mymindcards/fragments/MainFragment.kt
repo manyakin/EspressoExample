@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.arellomobile.mvp.MvpAppCompatDialogFragment
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.adapters.CardListAdapter
 import ru.anikey.mymindcards.models.CardModel
@@ -24,6 +26,11 @@ class MainFragment : MvpAppCompatFragment(), MainView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         mPresenter.initCardList()
+
+        view.main_add_card_btn.setOnClickListener {
+            mPresenter.addButtonPressed()
+        }
+
         return view
     }
 
@@ -34,7 +41,8 @@ class MainFragment : MvpAppCompatFragment(), MainView {
         main_card_list.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
     }
 
-    override fun addCard() {
+    override fun showDialog(fragment: MvpAppCompatDialogFragment) {
+        fragment.show(activity!!.supportFragmentManager, "")
     }
 
     override fun startTest() {

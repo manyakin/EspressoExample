@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomTextInputLayout">
+        <attr name="placeholder" format="string"/>
+        <attr name="input_error" format="string"/>
+    </declare-styleable>
+
+</resources>
