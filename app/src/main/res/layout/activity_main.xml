@@ -34,7 +34,7 @@
 
         <Button
             style="?attr/buttonBarButtonStyle"
-            android:id="@+id/main_start_training_btn"
+            android:id="@+id/main_start_test_btn"
             android:text="@string/main_start_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

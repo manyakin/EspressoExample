@@ -8,7 +8,9 @@ object MainRepository {
         CardModel("Second", "Second question", "Second answer"),
         CardModel("Third", "Third question", "Third answer"),
         CardModel("Fourth", "Fourth question", "Fourth answer"),
-        CardModel("Fifth", "Fifth question", "Fifth answer")
+            CardModel("Fifth", "Fifth question", "Fifth answer"),
+            CardModel("Sixth", "Sixth question", "Sixth answer"),
+            CardModel("Seventh", "Seventh question", "Seventh answer")
     )
 
     fun addCard(card: CardModel) {

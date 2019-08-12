@@ -20,7 +20,7 @@ import ru.anikey.mymindcards.utils.ARG_POSITION
 import ru.anikey.mymindcards.utils.CODE_ADD_CARD_ACTIVITY
 import ru.anikey.mymindcards.views.MainView
 
-class MainActivity : MvpAppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAddCardButton: Button
     private lateinit var mStartTestButton: Button
@@ -34,10 +34,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         initViews()
 
         mPresenter.initCardList()
-
-        mAddCardButton.setOnClickListener {
-            mPresenter.addButtonPressed()
-        }
     }
 
     /**
@@ -66,6 +62,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun startTest() {
+        val intent = Intent(this, TestActivity::class.java)
+        startActivity(intent)
     }
 
     override fun showPopup(itemView: View, position: Int) {
@@ -93,6 +91,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
+    override fun onClick(itemView: View) {
+        when (itemView.id) {
+            R.id.main_add_card_btn -> mPresenter.addButtonPressed()
+            R.id.main_start_test_btn -> mPresenter.startTestPressed()
+        }
+    }
+
     /**
      * =================================================================================================================
      * Support
@@ -102,7 +107,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private fun initViews() {
         mRecyclerView = main_card_list
         mAddCardButton = main_add_card_btn
-        mStartTestButton = main_start_training_btn
+        mStartTestButton = main_start_test_btn
+
+        mAddCardButton.setOnClickListener(this)
+        mStartTestButton.setOnClickListener(this)
     }
 
 }

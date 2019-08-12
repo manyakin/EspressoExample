@@ -12,6 +12,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
+        <activity android:name=".activities.TestActivity" />
+
         <activity
             android:name=".activities.AddCardActivity"
             android:configChanges="keyboardHidden|screenSize" />
