@@ -94,6 +94,8 @@ class TestActivity : MvpAppCompatActivity(), TestView, View.OnClickListener {
      */
 
     private fun initViews() {
+        title = getString(R.string.test_toolbar_title)
+
         mTitle = test_title_text
         mQuestion = test_question_text
         mAnswer = test_answer_text

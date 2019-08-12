@@ -25,6 +25,8 @@
     <string name="add_card_answer_error">Введите ответ</string>
 
     <!-- Test activity strings -->
+    <string name="test_toolbar_title">Тестирование</string>
+
     <string name="test_show_answer_button">Показать ответ</string>
     <string name="test_is_true_button">Верно</string>
     <string name="test_is_false_button">Не верно</string>
