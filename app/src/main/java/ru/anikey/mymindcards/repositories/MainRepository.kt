@@ -3,7 +3,7 @@ package ru.anikey.mymindcards.repositories
 import ru.anikey.mymindcards.models.CardModel
 
 object MainRepository {
-    val cards = mutableListOf(
+    private val cards = mutableListOf(
         CardModel("First", "First question", "First answer"),
         CardModel("Second", "Second question", "Second answer"),
         CardModel("Third", "Third question", "Third answer"),
@@ -21,6 +21,10 @@ object MainRepository {
 
     fun getCard(position: Int): CardModel {
         return cards[position]
+    }
+
+    fun getCardList(): MutableList<CardModel> {
+        return cards
     }
 
 }

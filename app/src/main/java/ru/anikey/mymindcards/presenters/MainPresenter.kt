@@ -9,7 +9,7 @@ import ru.anikey.mymindcards.views.MainView
 class MainPresenter : MvpPresenter<MainView>() {
 
     fun initCardList() {
-        viewState.showList(MainRepository.cards)
+        viewState.showList(MainRepository.getCardList())
     }
 
     fun addButtonPressed() {
