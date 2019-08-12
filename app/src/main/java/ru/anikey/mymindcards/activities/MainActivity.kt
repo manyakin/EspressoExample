@@ -3,7 +3,9 @@ package ru.anikey.mymindcards.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -50,6 +52,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         main_card_list.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
     }
 
+
     override fun startAddCardActivity() {
         val intent = Intent(this, AddCardActivity::class.java)
         startActivityForResult(intent, CODE_ADD_CARD_ACTIVITY)
@@ -65,8 +68,23 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun startTest() {
     }
 
-    override fun onCardClicked(position: Int) {
-        mPresenter.getClickedCard(position)
+    override fun showPopup(itemView: View, position: Int) {
+        val popupMenu = PopupMenu(itemView.context, itemView)
+        popupMenu.inflate(R.menu.main_popup_menu)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.main_popup_edit -> {
+                    mPresenter.getClickedCard(position)
+                    true
+                }
+                R.id.main_popup_delete -> {
+                    mPresenter.deleteCard(position)
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -86,4 +104,5 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mAddCardButton = main_add_card_btn
         mStartTestButton = main_start_training_btn
     }
+
 }

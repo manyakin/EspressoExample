@@ -27,4 +27,8 @@ object MainRepository {
         return cards
     }
 
+    fun deleteCard(position: Int) {
+        cards.removeAt(position)
+    }
+
 }

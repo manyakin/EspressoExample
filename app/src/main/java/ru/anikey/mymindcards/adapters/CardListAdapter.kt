@@ -39,8 +39,8 @@ class CardListAdapter(
             itemView.setOnClickListener(this)
         }
 
-        override fun onClick(p0: View?) {
-            mainView.onCardClicked(adapterPosition)
+        override fun onClick(view: View) {
+            mainView.showPopup(view, adapterPosition)
         }
     }
 }

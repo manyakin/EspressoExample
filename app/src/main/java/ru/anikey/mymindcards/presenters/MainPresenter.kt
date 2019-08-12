@@ -21,4 +21,9 @@ class MainPresenter : MvpPresenter<MainView>() {
         viewState.startEditCardActivity(card, position)
     }
 
+    fun deleteCard(position: Int) {
+        MainRepository.deleteCard(position)
+        viewState.showList(MainRepository.getCardList())
+    }
+
 }

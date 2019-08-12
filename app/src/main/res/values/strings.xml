@@ -8,6 +8,9 @@
     <string name="main_start_btn">Начать тест</string>
     <string name="main_card_title">Карточка %1$d</string>
 
+    <string name="main_popup_edit">Редактировать</string>
+    <string name="main_popup_delete">Удалить</string>
+
     <!-- Add card activity strings -->
     <string name="add_card_toolbar_title">Добавление карточки</string>
     <string name="edit_card_toolbar_title">Редактирование карточки</string>
