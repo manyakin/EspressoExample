@@ -40,7 +40,7 @@ class CardListAdapter(
         }
 
         override fun onClick(view: View) {
-            mainView.showPopup(view, adapterPosition)
+            mainView.showPopup(view, adapterPosition, cardList[adapterPosition])
         }
     }
 }

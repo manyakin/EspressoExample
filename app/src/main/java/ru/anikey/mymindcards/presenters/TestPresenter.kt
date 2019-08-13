@@ -9,7 +9,7 @@ import java.text.DecimalFormat
 
 @InjectViewState
 class TestPresenter : MvpPresenter<TestView>() {
-    private val cardList = MainRepository.getCardList().shuffled()
+    private val cardList = MainRepository.cards.shuffled()
     private var cardCount = 0
     private var trueAnswers = 0
     private var falseAnswers = 0

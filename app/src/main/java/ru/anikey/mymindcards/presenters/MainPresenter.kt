@@ -1,15 +1,18 @@
 package ru.anikey.mymindcards.presenters
 
+import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.repositories.MainRepository
 import ru.anikey.mymindcards.views.MainView
 
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>() {
 
-    fun initCardList() {
-        viewState.showList(MainRepository.getCardList())
+    fun initCardList(context: Context) {
+        val cards = MainRepository.getCardList(context)
+        viewState.showList(cards)
     }
 
     fun addButtonPressed() {
@@ -20,14 +23,14 @@ class MainPresenter : MvpPresenter<MainView>() {
         viewState.startTest()
     }
 
-    fun getClickedCard(position: Int) {
-        val card = MainRepository.getCard(position)
+    fun getClickedCard(context: Context, position: Int) {
+        val card = MainRepository.getCard(context, position)
         viewState.startEditCardActivity(card, position)
     }
 
-    fun deleteCard(position: Int) {
-        MainRepository.deleteCard(position)
-        viewState.showList(MainRepository.getCardList())
+    fun deleteCard(context: Context, card: CardModel) {
+        MainRepository.deleteCard(context, card)
+        viewState.showList(MainRepository.getCardList(context))
     }
 
 }

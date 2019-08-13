@@ -1,36 +1,41 @@
 package ru.anikey.mymindcards.repositories
 
+import android.content.Context
+import ru.anikey.mymindcards.db.DBHelper
+import ru.anikey.mymindcards.db.DBReader
+import ru.anikey.mymindcards.db.DBWriter
 import ru.anikey.mymindcards.models.CardModel
 
 object MainRepository {
-    private val cards = mutableListOf(
-        CardModel("First", "First question", "First answer"),
-        CardModel("Second", "Second question", "Second answer"),
-        CardModel("Third", "Third question", "Third answer"),
-        CardModel("Fourth", "Fourth question", "Fourth answer"),
-            CardModel("Fifth", "Fifth question", "Fifth answer"),
-            CardModel("Sixth", "Sixth question", "Sixth answer"),
-            CardModel("Seventh", "Seventh question", "Seventh answer")
-    )
+    private lateinit var dbWriter: DBWriter
+    private lateinit var dbReader: DBReader
+    lateinit var cards: MutableList<CardModel>
 
-    fun addCard(card: CardModel) {
-        cards.add(card)
+
+    fun addCard(context: Context, title: String, question: String, answer: String) {
+        dbWriter = DBWriter(context)
+        dbWriter.addCard(title, question, answer)
     }
 
-    fun editCard(card: CardModel, position: Int) {
-        cards[position] = card
+    fun editCard(context: Context, card: CardModel, title: String, question: String, answer: String) {
+        dbWriter = DBWriter(context)
+        dbWriter.editCard(card, title, question, answer)
     }
 
-    fun getCard(position: Int): CardModel {
-        return cards[position]
+    fun getCard(context: Context, position: Int): CardModel {
+        dbReader = DBReader(DBHelper.getInstance(context).readableDatabase)
+        return dbReader.getPosition(position)
     }
 
-    fun getCardList(): MutableList<CardModel> {
+    fun getCardList(context: Context): MutableList<CardModel> {
+        dbReader = DBReader(DBHelper.getInstance(context).readableDatabase)
+        cards = dbReader.open()
         return cards
     }
 
-    fun deleteCard(position: Int) {
-        cards.removeAt(position)
+    fun deleteCard(context: Context, card: CardModel) {
+        dbWriter = DBWriter(context)
+        dbWriter.deleteCard(card)
     }
 
 }

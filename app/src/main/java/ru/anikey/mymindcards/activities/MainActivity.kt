@@ -33,7 +33,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         setContentView(R.layout.activity_main)
         initViews()
 
-        mPresenter.initCardList()
+        mPresenter.initCardList(applicationContext)
     }
 
     /**
@@ -66,17 +66,17 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         startActivity(intent)
     }
 
-    override fun showPopup(itemView: View, position: Int) {
+    override fun showPopup(itemView: View, position: Int, card: CardModel) {
         val popupMenu = PopupMenu(itemView.context, itemView)
         popupMenu.inflate(R.menu.main_popup_menu)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.main_popup_edit -> {
-                    mPresenter.getClickedCard(position)
+                    mPresenter.getClickedCard(applicationContext, position)
                     true
                 }
                 R.id.main_popup_delete -> {
-                    mPresenter.deleteCard(position)
+                    mPresenter.deleteCard(applicationContext, card)
                     true
                 }
                 else -> false
@@ -87,7 +87,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
-            mPresenter.initCardList()
+            mPresenter.initCardList(applicationContext)
         }
     }
 

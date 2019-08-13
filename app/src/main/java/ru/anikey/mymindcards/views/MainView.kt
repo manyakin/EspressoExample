@@ -6,7 +6,7 @@ import ru.anikey.mymindcards.models.CardModel
 
 interface MainView : MvpView {
     fun showList(list: List<CardModel>)
-    fun showPopup(itemView: View, position: Int)
+    fun showPopup(itemView: View, position: Int, card: CardModel)
     fun startAddCardActivity()
     fun startEditCardActivity(card: CardModel, position: Int)
     fun startTest()

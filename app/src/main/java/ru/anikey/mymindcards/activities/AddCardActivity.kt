@@ -70,14 +70,14 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         mQestion.validate()
         mAnswer.validate()
         if (!mTitle.isEmpty && !mQestion.isEmpty && !mAnswer.isEmpty) {
-            val card = CardModel(
-                title = mTitle.edit_text.text.toString(),
-                question = mQestion.edit_text.text.toString(),
-                answer = mAnswer.edit_text.text.toString()
-            )
+
+            val title = mTitle.edit_text.text.toString()
+            val question = mQestion.edit_text.text.toString()
+            val answer = mAnswer.edit_text.text.toString()
+
             when (mode) {
-                Mode.ADD -> mPresenter.saveCard(card)
-                Mode.EDIT -> mPresenter.editCard(card, mPosition!!)
+                Mode.ADD -> mPresenter.saveCard(applicationContext, title, question, answer)
+                Mode.EDIT -> mPresenter.editCard(applicationContext, mCard!!, title, question, answer)
             }
         }
     }
