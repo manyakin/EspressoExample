@@ -33,7 +33,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         setContentView(R.layout.activity_main)
         initViews()
 
-        mPresenter.initCardList(applicationContext)
+        mPresenter.initCardList()
     }
 
     /**
@@ -72,11 +72,11 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.main_popup_edit -> {
-                    mPresenter.getClickedCard(applicationContext, position)
+                    mPresenter.getClickedCard(position)
                     true
                 }
                 R.id.main_popup_delete -> {
-                    mPresenter.deleteCard(applicationContext, card)
+                    mPresenter.deleteCard(card)
                     true
                 }
                 else -> false
@@ -87,7 +87,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
-            mPresenter.initCardList(applicationContext)
+            mPresenter.initCardList()
         }
     }
 

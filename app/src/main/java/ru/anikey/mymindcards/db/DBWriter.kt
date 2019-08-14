@@ -1,11 +1,10 @@
 package ru.anikey.mymindcards.db
 
 import android.content.ContentValues
-import android.content.Context
 import ru.anikey.mymindcards.models.CardModel
 
-class DBWriter(context: Context) {
-    private val dataBase = DBHelper.getInstance(context).writableDatabase
+object DBWriter {
+    private val dataBase = DBHelper.writableDatabase
 
     fun addCard(title: String, question: String, answer: String): CardModel {
         val values = ContentValues()

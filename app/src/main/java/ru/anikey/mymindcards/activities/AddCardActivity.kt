@@ -76,8 +76,8 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
             val answer = mAnswer.edit_text.text.toString()
 
             when (mode) {
-                Mode.ADD -> mPresenter.saveCard(applicationContext, title, question, answer)
-                Mode.EDIT -> mPresenter.editCard(applicationContext, mCard!!, title, question, answer)
+                Mode.ADD -> mPresenter.saveCard(title, question, answer)
+                Mode.EDIT -> mPresenter.editCard(mCard!!, title, question, answer)
             }
         }
     }
