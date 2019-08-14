@@ -10,12 +10,12 @@ import ru.anikey.mymindcards.views.AddCardView
 class AddCardPresenter : MvpPresenter<AddCardView>() {
 
     fun saveCard(title: String, question: String, answer: String) {
-        MainRepository.addCard(title, question, answer)
-        viewState.cardSaved()
+        val card = MainRepository.addCard(title, question, answer)
+        viewState.cardSaved(card)
     }
 
     fun editCard(card: CardModel, title: String, question: String, answer: String) {
-        MainRepository.editCard(card, title, question, answer)
-        viewState.cardSaved()
+        val editedCard = MainRepository.editCard(card, title, question, answer)
+        viewState.cardSaved(editedCard)
     }
 }

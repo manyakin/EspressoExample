@@ -18,8 +18,12 @@ class CardListAdapter(private val mainView: MainView) :
     fun setData(newCards: List<CardModel>) {
         mCardList.clear()
         mCardList.addAll(newCards)
-
         notifyDataSetChanged()
+    }
+
+    fun insertCard(card: CardModel) {
+        mCardList.add(card)
+        notifyItemInserted(mCardList.lastIndex)
     }
 
     fun updateCard(newCard: CardModel, position: Int) {
@@ -30,6 +34,10 @@ class CardListAdapter(private val mainView: MainView) :
     fun deleteCard(position: Int) {
         mCardList.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return mCardList[position].id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardListVH {

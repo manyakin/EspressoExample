@@ -1,6 +1,5 @@
 package ru.anikey.mymindcards.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -16,6 +15,8 @@ import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.AddCardPresenter
 import ru.anikey.mymindcards.utils.ARG_CARD
 import ru.anikey.mymindcards.utils.ARG_POSITION
+import ru.anikey.mymindcards.utils.RESULT_ADD
+import ru.anikey.mymindcards.utils.RESULT_EDIT
 import ru.anikey.mymindcards.views.AddCardView
 
 class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
@@ -57,15 +58,23 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         }
     }
 
-    override fun cardSaved() {
-        var data: Intent? = null
-        if (mode == Mode.EDIT) {
-            data = Intent()
-            data.putExtra(ARG_CARD, mCard)
-            data.putExtra(ARG_POSITION, mPosition)
+    override fun cardSaved(card: CardModel) {
+        val data: Intent
+        when (mode) {
+            Mode.EDIT -> {
+                data = Intent()
+                data.putExtra(ARG_CARD, card)
+                data.putExtra(ARG_POSITION, mPosition)
+                setResult(RESULT_EDIT, data)
+                finish()
+            }
+            Mode.ADD -> {
+                data = Intent()
+                data.putExtra(ARG_CARD, card)
+                setResult(RESULT_ADD, data)
+                finish()
+            }
         }
-        setResult(Activity.RESULT_OK, data)
-        finish()
     }
 
     /**

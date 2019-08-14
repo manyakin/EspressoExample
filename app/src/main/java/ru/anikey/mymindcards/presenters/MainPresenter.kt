@@ -35,7 +35,7 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     fun deleteCard(card: CardModel) {
         MainRepository.deleteCard(card)
-        viewState.showList(MainRepository.getCardList())
+//        viewState.showList(MainRepository.getCardList())
     }
 
 }

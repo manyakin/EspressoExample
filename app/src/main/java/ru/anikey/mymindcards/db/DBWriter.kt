@@ -16,7 +16,7 @@ object DBWriter {
         return CardModel(insertId, title, question, answer)
     }
 
-    fun editCard(oldCard: CardModel, title: String, question: String, answer: String) {
+    fun editCard(oldCard: CardModel, title: String, question: String, answer: String): CardModel {
         val editedCard = ContentValues()
         editedCard.put(DBHelper.COLUMN_ID, oldCard.id)
         editedCard.put(DBHelper.COLUMN_TITLE, title)
@@ -29,6 +29,7 @@ object DBWriter {
             DBHelper.COLUMN_ID + "=" + oldCard.id,
             null
         )
+        return CardModel(oldCard.id, title, question, answer)
     }
 
     fun deleteCard(card: CardModel) {

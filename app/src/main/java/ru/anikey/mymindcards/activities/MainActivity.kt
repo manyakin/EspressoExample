@@ -1,6 +1,5 @@
 package ru.anikey.mymindcards.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,9 +19,7 @@ import ru.anikey.mymindcards.adapters.CardListAdapter
 import ru.anikey.mymindcards.custom.CustomRecyclerView
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.MainPresenter
-import ru.anikey.mymindcards.utils.ARG_CARD
-import ru.anikey.mymindcards.utils.ARG_POSITION
-import ru.anikey.mymindcards.utils.CODE_ADD_CARD_ACTIVITY
+import ru.anikey.mymindcards.utils.*
 import ru.anikey.mymindcards.views.MainView
 
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
@@ -40,6 +37,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
+        initAdapter()
 
         mPresenter.initCardList()
     }
@@ -107,15 +105,26 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                mAdapter.updateCard(
-                    it.getParcelableExtra(ARG_CARD),
-                    it.getIntExtra(ARG_POSITION, 0)
-                )
+        if (requestCode == CODE_ADD_CARD_ACTIVITY) {
+            when (resultCode) {
+                RESULT_EDIT -> {
+                    data?.let {
+                        mAdapter.updateCard(
+                            it.getParcelableExtra(ARG_CARD),
+                            it.getIntExtra(ARG_POSITION, 0)
+                        )
+                    }
+                }
+                RESULT_ADD -> {
+                    data?.let {
+                        mAdapter.insertCard(
+                            it.getParcelableExtra(ARG_CARD)
+                        )
+                    }
+                }
             }
-            mPresenter.initCardList()
         }
+//            mPresenter.initCardList()
     }
 
     override fun onClick(itemView: View) {
@@ -140,15 +149,18 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mStartTestButton = main_start_test_btn
         mEmptyView = main_empty_text
 
+        mAddCardButton.setOnClickListener(this)
+        mStartTestButton.setOnClickListener(this)
+    }
+
+    private fun initAdapter() {
         mAdapter = CardListAdapter(this)
+        mAdapter.setHasStableIds(true)
+
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         mRecyclerView.setEmptyView(mEmptyView)
 
-        mAddCardButton.setOnClickListener(this)
-        mStartTestButton.setOnClickListener(this)
     }
-
-
 }
