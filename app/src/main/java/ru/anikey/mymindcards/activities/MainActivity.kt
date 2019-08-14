@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -24,6 +25,7 @@ import ru.anikey.mymindcards.utils.CODE_ADD_CARD_ACTIVITY
 import ru.anikey.mymindcards.views.MainView
 
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
+    private lateinit var mToolbar: Toolbar
     private lateinit var mRecyclerView: CustomRecyclerView
     private lateinit var mAddCardButton: Button
     private lateinit var mStartTestButton: Button
@@ -118,6 +120,9 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
      */
 
     private fun initViews() {
+        mToolbar = main_toolbar
+        setSupportActionBar(mToolbar)
+
         mRecyclerView = main_card_list
         mAddCardButton = main_add_card_btn
         mStartTestButton = main_start_test_btn

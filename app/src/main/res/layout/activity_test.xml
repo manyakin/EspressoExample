@@ -5,13 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".activities.TestActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/test_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <TextView
         android:id="@+id/test_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/test_toolbar"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/test_question_text"
@@ -23,8 +31,8 @@
         android:visibility="gone" />
 
     <Button
-        style="@style/MainButtonStyle"
         android:id="@+id/test_show_answer_button"
+        style="@style/MainButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -40,8 +48,8 @@
         android:visibility="gone">
 
         <Button
-            style="@style/MainButtonStyle"
             android:id="@+id/test_is_true_button"
+            style="@style/MainButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_add_card.*
@@ -17,6 +18,7 @@ import ru.anikey.mymindcards.utils.ARG_POSITION
 import ru.anikey.mymindcards.views.AddCardView
 
 class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
+    private lateinit var mToolbar: Toolbar
     private lateinit var mTitle: CustomTextInputLayout
     private lateinit var mQestion: CustomTextInputLayout
     private lateinit var mAnswer: CustomTextInputLayout
@@ -83,6 +85,16 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
     }
 
     private fun initViews() {
+        mToolbar = add_card_toolbar
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.run {
+            setDisplayHomeAsUpEnabled(true)
+            title = when (mode) {
+                Mode.ADD -> getString(R.string.add_card_toolbar_title)
+                Mode.EDIT -> getString(R.string.edit_card_toolbar_title)
+            }
+        }
+
         mTitle = title_fld
         mQestion = question_fld
         mAnswer = answer_fld
@@ -91,11 +103,6 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
             mTitle.setText(card.title)
             mQestion.setText(card.question)
             mAnswer.setText(card.answer)
-        }
-
-        title = when (mode) {
-            Mode.ADD -> getString(R.string.add_card_toolbar_title)
-            Mode.EDIT -> getString(R.string.edit_card_toolbar_title)
         }
 
         mSave = save_card_btn

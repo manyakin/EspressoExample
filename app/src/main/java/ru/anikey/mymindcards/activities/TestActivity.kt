@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_test.*
@@ -15,6 +16,7 @@ import ru.anikey.mymindcards.presenters.TestPresenter
 import ru.anikey.mymindcards.views.TestView
 
 class TestActivity : MvpAppCompatActivity(), TestView, View.OnClickListener {
+    private lateinit var mToolbar: Toolbar
     private lateinit var mTitle: TextView
     private lateinit var mQuestion: TextView
     private lateinit var mAnswer: TextView
@@ -94,7 +96,12 @@ class TestActivity : MvpAppCompatActivity(), TestView, View.OnClickListener {
      */
 
     private fun initViews() {
-        title = getString(R.string.test_toolbar_title)
+        mToolbar = test_toolbar
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.run {
+            setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.test_toolbar_title)
+        }
 
         mTitle = test_title_text
         mQuestion = test_question_text

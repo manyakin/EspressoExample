@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,36 +7,50 @@
     android:orientation="vertical"
     tools:context=".activities.AddCardActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/add_card_toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
 
-        <ru.anikey.mymindcards.custom.CustomTextInputLayout
-            android:id="@+id/title_fld"
-            style="@style/AddCardFieldStyle"
-            app:input_error="@string/add_card_title_error"
-            app:placeholder="@string/add_card_title" />
+    <ScrollView
+        android:layout_below="@id/add_card_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ru.anikey.mymindcards.custom.CustomTextInputLayout
-            android:id="@+id/question_fld"
-            style="@style/AddCardFieldStyle"
-            app:input_error="@string/add_card_question_error"
-            app:placeholder="@string/add_card_question" />
-
-        <ru.anikey.mymindcards.custom.CustomTextInputLayout
-            android:id="@+id/answer_fld"
-            style="@style/AddCardFieldStyle"
-            app:input_error="@string/add_card_answer_error"
-            app:placeholder="@string/add_card_answer" />
-
-        <Button
-            android:id="@+id/save_card_btn"
-            style="@style/MainButtonStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_card_save" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ru.anikey.mymindcards.custom.CustomTextInputLayout
+                android:id="@+id/title_fld"
+                style="@style/AddCardFieldStyle"
+                app:input_error="@string/add_card_title_error"
+                app:placeholder="@string/add_card_title" />
 
-</ScrollView>
+            <ru.anikey.mymindcards.custom.CustomTextInputLayout
+                android:id="@+id/question_fld"
+                style="@style/AddCardFieldStyle"
+                app:input_error="@string/add_card_question_error"
+                app:placeholder="@string/add_card_question" />
+
+            <ru.anikey.mymindcards.custom.CustomTextInputLayout
+                android:id="@+id/answer_fld"
+                style="@style/AddCardFieldStyle"
+                app:input_error="@string/add_card_answer_error"
+                app:placeholder="@string/add_card_answer" />
+
+            <Button
+                android:id="@+id/save_card_btn"
+                style="@style/MainButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_card_save" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

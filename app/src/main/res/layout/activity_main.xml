@@ -6,25 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ru.anikey.mymindcards.custom.CustomRecyclerView
         android:id="@+id/main_card_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/main_btn_layout"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar">
 
     </ru.anikey.mymindcards.custom.CustomRecyclerView>
 
     <TextView
         android:id="@+id/main_empty_text"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_empty_text"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/main_btn_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
 
     <LinearLayout
         android:id="@+id/main_btn_layout"
