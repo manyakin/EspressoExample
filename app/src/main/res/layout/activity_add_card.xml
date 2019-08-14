@@ -8,9 +8,9 @@
     tools:context=".activities.AddCardActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ru.anikey.mymindcards.custom.CustomTextInputLayout
             android:id="@+id/title_fld"
@@ -32,7 +32,9 @@
 
         <Button
             android:id="@+id/save_card_btn"
-            style="@style/AddCardFieldStyle"
+            style="@style/MainButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/add_card_save" />
 
     </LinearLayout>

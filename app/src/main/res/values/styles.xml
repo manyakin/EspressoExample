@@ -7,12 +7,25 @@
         <item name="colorAccent">@android:color/holo_red_dark</item>
     </style>
 
-    <!-- Add card fragment -->
+    <style name="MainButtonStyle">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="AddCardFieldStyle">
         <item name="android:layout_margin">8dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="TestActivityTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">64dp</item>
     </style>
 
 </resources>

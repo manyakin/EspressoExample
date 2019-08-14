@@ -25,7 +25,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            style="?attr/buttonBarButtonStyle"
+            style="@style/MainButtonStyle"
             android:id="@+id/main_add_card_btn"
             android:text="@string/main_add_btn"
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:layout_weight="1" />
 
         <Button
-            style="?attr/buttonBarButtonStyle"
+            style="@style/MainButtonStyle"
             android:id="@+id/main_start_test_btn"
             android:text="@string/main_start_btn"
             android:layout_width="0dp"
