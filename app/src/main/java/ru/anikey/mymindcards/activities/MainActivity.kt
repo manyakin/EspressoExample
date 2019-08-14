@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -13,6 +15,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.adapters.CardListAdapter
+import ru.anikey.mymindcards.custom.CustomRecyclerView
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.presenters.MainPresenter
 import ru.anikey.mymindcards.utils.ARG_CARD
@@ -21,9 +24,10 @@ import ru.anikey.mymindcards.utils.CODE_ADD_CARD_ACTIVITY
 import ru.anikey.mymindcards.views.MainView
 
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
-    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerView: CustomRecyclerView
     private lateinit var mAddCardButton: Button
     private lateinit var mStartTestButton: Button
+    private lateinit var mEmptyView: TextView
 
     @InjectPresenter
     lateinit var mPresenter: MainPresenter
@@ -43,9 +47,10 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
      */
 
     override fun showList(list: List<CardModel>) {
-        main_card_list.setHasFixedSize(true)
-        main_card_list.adapter = CardListAdapter(list, this)
-        main_card_list.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.adapter = CardListAdapter(list, this)
+        mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        mRecyclerView.setEmptyView(mEmptyView)
     }
 
 
@@ -85,6 +90,14 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         popupMenu.show()
     }
 
+    override fun showError(text: String) {
+        Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showError(textResource: Int) {
+        Toast.makeText(applicationContext, getString(textResource), Toast.LENGTH_LONG).show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
             mPresenter.initCardList()
@@ -108,6 +121,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mRecyclerView = main_card_list
         mAddCardButton = main_add_card_btn
         mStartTestButton = main_start_test_btn
+        mEmptyView = main_empty_text
 
         mAddCardButton.setOnClickListener(this)
         mStartTestButton.setOnClickListener(this)
