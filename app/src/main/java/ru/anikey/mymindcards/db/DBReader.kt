@@ -18,12 +18,6 @@ object DBReader {
         return query()
     }
 
-    fun refresh() {
-        val position = cursor.position
-        query()
-        cursor.moveToPosition(position)
-    }
-
     fun getPosition(position: Int): CardModel {
         cursor = dataBase.query(
             DBHelper.TABLE_CARDS,
@@ -37,11 +31,6 @@ object DBReader {
         cursor.moveToPosition(position)
         return cursorToCard()
     }
-
-    fun getCount(): Int {
-        return cursor.count
-    }
-
 
     private fun cursorToCard(): CardModel {
         val card = CardModel(
