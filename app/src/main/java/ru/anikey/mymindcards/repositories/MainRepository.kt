@@ -7,7 +7,6 @@ import ru.anikey.mymindcards.models.CardModel
 object MainRepository {
     lateinit var cards: MutableList<CardModel>
 
-
     fun addCard(title: String, question: String, answer: String) {
         DBWriter.addCard(title, question, answer)
     }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +28,7 @@ import ru.anikey.mymindcards.views.MainView
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
     private lateinit var mRecyclerView: CustomRecyclerView
+    private lateinit var mAdapter: CardListAdapter
     private lateinit var mAddCardButton: Button
     private lateinit var mStartTestButton: Button
     private lateinit var mEmptyView: TextView
@@ -49,10 +51,13 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
      */
 
     override fun showList(list: List<CardModel>) {
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = CardListAdapter(list, this)
-        mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        mRecyclerView.setEmptyView(mEmptyView)
+        val controller = AnimationUtils.loadLayoutAnimation(
+            applicationContext,
+            R.anim.layout_animation_fall_down
+        )
+        mRecyclerView.layoutAnimation = controller
+        mAdapter.setData(list)
+        mRecyclerView.scheduleLayoutAnimation()
     }
 
 
@@ -83,6 +88,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
                     true
                 }
                 R.id.main_popup_delete -> {
+                    mAdapter.deleteCard(position)
                     mPresenter.deleteCard(card)
                     true
                 }
@@ -102,6 +108,12 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_ADD_CARD_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                mAdapter.updateCard(
+                    it.getParcelableExtra(ARG_CARD),
+                    it.getIntExtra(ARG_POSITION, 0)
+                )
+            }
             mPresenter.initCardList()
         }
     }
@@ -128,8 +140,15 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mStartTestButton = main_start_test_btn
         mEmptyView = main_empty_text
 
+        mAdapter = CardListAdapter(this)
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        mRecyclerView.setEmptyView(mEmptyView)
+
         mAddCardButton.setOnClickListener(this)
         mStartTestButton.setOnClickListener(this)
     }
+
 
 }

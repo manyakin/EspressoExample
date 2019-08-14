@@ -1,6 +1,7 @@
 package ru.anikey.mymindcards.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -20,7 +21,7 @@ import ru.anikey.mymindcards.views.AddCardView
 class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
     private lateinit var mTitle: CustomTextInputLayout
-    private lateinit var mQestion: CustomTextInputLayout
+    private lateinit var mQuestion: CustomTextInputLayout
     private lateinit var mAnswer: CustomTextInputLayout
     private lateinit var mSave: Button
 
@@ -57,7 +58,13 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
     }
 
     override fun cardSaved() {
-        setResult(Activity.RESULT_OK)
+        var data: Intent? = null
+        if (mode == Mode.EDIT) {
+            data = Intent()
+            data.putExtra(ARG_CARD, mCard)
+            data.putExtra(ARG_POSITION, mPosition)
+        }
+        setResult(Activity.RESULT_OK, data)
         finish()
     }
 
@@ -69,12 +76,12 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
 
     private fun checkFields() {
         mTitle.validate()
-        mQestion.validate()
+        mQuestion.validate()
         mAnswer.validate()
-        if (!mTitle.isEmpty && !mQestion.isEmpty && !mAnswer.isEmpty) {
+        if (!mTitle.isEmpty && !mQuestion.isEmpty && !mAnswer.isEmpty) {
 
             val title = mTitle.edit_text.text.toString()
-            val question = mQestion.edit_text.text.toString()
+            val question = mQuestion.edit_text.text.toString()
             val answer = mAnswer.edit_text.text.toString()
 
             when (mode) {
@@ -96,12 +103,12 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         }
 
         mTitle = title_fld
-        mQestion = question_fld
+        mQuestion = question_fld
         mAnswer = answer_fld
 
         mCard?.let { card ->
             mTitle.setText(card.title)
-            mQestion.setText(card.question)
+            mQuestion.setText(card.question)
             mAnswer.setText(card.answer)
         }
 
