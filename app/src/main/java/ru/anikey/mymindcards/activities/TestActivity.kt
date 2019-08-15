@@ -1,6 +1,7 @@
 package ru.anikey.mymindcards.activities
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -87,6 +88,13 @@ class TestActivity : MvpAppCompatActivity(), TestView, View.OnClickListener {
                 mPresenter.answerIsFalse()
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**

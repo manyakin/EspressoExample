@@ -2,6 +2,7 @@ package ru.anikey.mymindcards.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
@@ -56,6 +57,13 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
                 checkFields()
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun cardSaved(card: CardModel) {
