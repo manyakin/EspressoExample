@@ -124,7 +124,6 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
                 }
             }
         }
-//            mPresenter.initCardList()
     }
 
     override fun onClick(itemView: View) {
