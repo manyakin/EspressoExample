@@ -3,15 +3,24 @@ package ru.anikey.mymindcards.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import ru.anikey.mymindcards.R
+import ru.anikey.mymindcards.app.App
 import ru.anikey.mymindcards.models.CardModel
 import ru.anikey.mymindcards.repositories.MainRepository
 import ru.anikey.mymindcards.views.MainView
+import javax.inject.Inject
 
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>() {
 
+    @Inject
+    lateinit var mainRepository: MainRepository
+
+    init {
+        App.appComponent.inject(this@MainPresenter)
+    }
+
     fun initCardList() {
-        val cards = MainRepository.getCardList()
+        val cards = mainRepository.getCardList()
         viewState.showList(cards)
     }
 
@@ -20,7 +29,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun startTestPressed() {
-        val cards = MainRepository.getCardList()
+        val cards = mainRepository.getCardList()
         if (cards.size >= 1) {
             viewState.startTest()
         } else {
@@ -29,13 +38,12 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun getClickedCard(position: Int) {
-        val card = MainRepository.getCard(position)
+        val card = mainRepository.getCard(position)
         viewState.startEditCardActivity(card, position)
     }
 
     fun deleteCard(card: CardModel) {
-        MainRepository.deleteCard(card)
-//        viewState.showList(MainRepository.getCardList())
+        mainRepository.deleteCard(card)
     }
 
 }

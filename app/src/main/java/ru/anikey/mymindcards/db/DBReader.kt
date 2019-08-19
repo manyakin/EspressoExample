@@ -4,8 +4,8 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.anikey.mymindcards.models.CardModel
 
-object DBReader {
-    private val dataBase: SQLiteDatabase = DBHelper.readableDatabase
+class DBReader(dbHelper: DBHelper) {
+    private var dataBase: SQLiteDatabase = dbHelper.getReadableDB()
     private lateinit var cursor: Cursor
     private val cardsColumns = arrayOf(
         DBHelper.COLUMN_ID,
