@@ -6,7 +6,7 @@ import ru.anikey.mymindcards.presenters.MainPresenter
 import ru.anikey.mymindcards.presenters.TestPresenter
 import javax.inject.Singleton
 
-@Component(modules = [DBHelperModule::class, DBWriterModule::class, DBReaderModule::class, RepositoryModule::class])
+@Component(modules = [RepositoryModule::class])
 @Singleton
 interface AppComponent {
 

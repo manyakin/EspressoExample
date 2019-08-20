@@ -3,7 +3,9 @@ package ru.anikey.mymindcards.app
 import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
-import ru.anikey.mymindcards.di.*
+import ru.anikey.mymindcards.di.AppComponent
+import ru.anikey.mymindcards.di.DaggerAppComponent
+import ru.anikey.mymindcards.di.RepositoryModule
 
 class App : Application() {
 
@@ -26,9 +28,6 @@ class App : Application() {
 
         Stetho.initializeWithDefaults(this)
         appComponent = DaggerAppComponent.builder()
-            .dBHelperModule(DBHelperModule())
-            .dBReaderModule(DBReaderModule())
-            .dBWriterModule(DBWriterModule())
             .repositoryModule(RepositoryModule())
             .build()
     }
