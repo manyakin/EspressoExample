@@ -3,6 +3,7 @@ package ru.anikey.mymindcards.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.anikey.mymindcards.app.App
 import ru.anikey.mymindcards.models.CardModel
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class AddCardPresenter : MvpPresenter<AddCardView>() {
+    private val disposes = CompositeDisposable()
 
     @Inject
     lateinit var mainRepository: IMainRepository
@@ -27,6 +29,7 @@ class AddCardPresenter : MvpPresenter<AddCardView>() {
             .subscribe { card ->
                 viewState.cardSaved(card)
             }
+        disposes.add(disposable)
     }
 
     fun editCard(card: CardModel, title: String, question: String, answer: String) {
@@ -36,5 +39,10 @@ class AddCardPresenter : MvpPresenter<AddCardView>() {
             .subscribe { savedCard ->
                 viewState.cardSaved(savedCard)
             }
+        disposes.add(disposable)
+    }
+
+    fun dispose() {
+        disposes.dispose()
     }
 }

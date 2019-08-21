@@ -45,6 +45,11 @@ class AddCardActivity : MvpAppCompatActivity(), AddCardView, View.OnClickListene
         initViews()
     }
 
+    override fun onDestroy() {
+        mPresenter.dispose()
+        super.onDestroy()
+    }
+
     /**
      * =============================================================================================
      * Callbacks

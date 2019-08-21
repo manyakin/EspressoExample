@@ -42,6 +42,11 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mPresenter.initCardList()
     }
 
+    override fun onDestroy() {
+        mPresenter.dispose()
+        super.onDestroy()
+    }
+
     /**
      * =================================================================================================================
      * Callbacks

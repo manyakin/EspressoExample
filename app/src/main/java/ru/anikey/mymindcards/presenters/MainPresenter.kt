@@ -3,6 +3,7 @@ package ru.anikey.mymindcards.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.app.App
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>() {
+    private val disposes = CompositeDisposable()
 
     @Inject
     lateinit var mainRepository: IMainRepository
@@ -28,6 +30,7 @@ class MainPresenter : MvpPresenter<MainView>() {
             .subscribe { cardList ->
                 viewState.showList(cardList)
             }
+        disposes.add(disposable)
     }
 
     fun addButtonPressed() {
@@ -45,7 +48,7 @@ class MainPresenter : MvpPresenter<MainView>() {
                     viewState.showError(R.string.main_no_cards_for_test)
                 }
             }
-
+        disposes.add(disposable)
     }
 
     fun getClickedCard(position: Int) {
@@ -55,10 +58,15 @@ class MainPresenter : MvpPresenter<MainView>() {
             .subscribe { card ->
                 viewState.startEditCardActivity(card, position)
             }
+        disposes.add(disposable)
     }
 
     fun deleteCard(card: CardModel) {
         mainRepository.deleteCard(card)
+    }
+
+    fun dispose() {
+        disposes.dispose()
     }
 
 }
