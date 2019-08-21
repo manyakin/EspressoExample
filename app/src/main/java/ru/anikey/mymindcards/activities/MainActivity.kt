@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
@@ -24,6 +25,7 @@ import ru.anikey.mymindcards.views.MainView
 
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
+    private lateinit var mProgressBar: ProgressBar
     private lateinit var mRecyclerView: CustomRecyclerView
     private lateinit var mAdapter: CardListAdapter
     private lateinit var mAddCardButton: Button
@@ -48,9 +50,9 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     }
 
     /**
-     * =================================================================================================================
+     * =============================================================================================
      * Callbacks
-     * =================================================================================================================
+     * =============================================================================================
      */
 
     override fun showList(list: List<CardModel>) {
@@ -61,6 +63,8 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mRecyclerView.layoutAnimation = controller
         mAdapter.setData(list)
         mRecyclerView.scheduleLayoutAnimation()
+        mProgressBar.visibility = View.GONE
+        mRecyclerView.setEmptyView(mEmptyView)
     }
 
 
@@ -139,15 +143,16 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     }
 
     /**
-     * =================================================================================================================
+     * =============================================================================================
      * Support
-     * =================================================================================================================
+     * =============================================================================================
      */
 
     private fun initViews() {
         mToolbar = main_toolbar
         setSupportActionBar(mToolbar)
 
+        mProgressBar = main_progress_bar
         mRecyclerView = main_card_list
         mAddCardButton = main_add_card_btn
         mStartTestButton = main_start_test_btn
@@ -164,7 +169,5 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        mRecyclerView.setEmptyView(mEmptyView)
-
     }
 }
