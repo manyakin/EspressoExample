@@ -3,7 +3,8 @@ package ru.anikey.mymindcards.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import ru.anikey.mymindcards.app.App
-import ru.anikey.mymindcards.repositories.MainRepository
+import ru.anikey.mymindcards.models.CardModel
+import ru.anikey.mymindcards.repositories.IMainRepository
 import ru.anikey.mymindcards.views.TestView
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -13,13 +14,19 @@ import javax.inject.Inject
 class TestPresenter : MvpPresenter<TestView>() {
 
     @Inject
-    lateinit var mainRepository: MainRepository
+    lateinit var mainRepository: IMainRepository
 
     init {
         App.appComponent.inject(this@TestPresenter)
     }
 
-    private val cardList = mainRepository.cards.shuffled()
+    private var cardList = mainRepository.getCardList().to {
+        var list = mutableListOf<CardModel>()
+        it.subscribe { cards ->
+            list = cards
+        }
+        list.shuffled()
+    }
     private var cardCount = 0
     private var trueAnswers = 0
     private var falseAnswers = 0

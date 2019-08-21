@@ -5,13 +5,14 @@ import dagger.Provides
 import ru.anikey.mymindcards.db.DBHelper
 import ru.anikey.mymindcards.db.DBReader
 import ru.anikey.mymindcards.db.DBWriter
+import ru.anikey.mymindcards.repositories.IMainRepository
 import ru.anikey.mymindcards.repositories.MainRepository
 
 @Module
 class RepositoryModule {
 
     @Provides
-    fun providesMainRepository(dbWriter: DBWriter, dbReader: DBReader): MainRepository {
+    fun providesMainRepository(dbWriter: DBWriter, dbReader: DBReader): IMainRepository {
         return MainRepository(dbWriter = dbWriter, dbReader = dbReader)
     }
 

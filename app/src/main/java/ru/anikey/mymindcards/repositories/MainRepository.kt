@@ -1,35 +1,40 @@
 package ru.anikey.mymindcards.repositories
 
+import io.reactivex.Observable
 import ru.anikey.mymindcards.db.DBReader
 import ru.anikey.mymindcards.db.DBWriter
 import ru.anikey.mymindcards.models.CardModel
 
-class MainRepository(var dbWriter: DBWriter, var dbReader: DBReader) {
+class MainRepository(var dbWriter: DBWriter, var dbReader: DBReader) : IMainRepository {
+
     var cards = mutableListOf<CardModel>()
 
     init {
         cards = dbReader.open()
     }
 
-    fun addCard(title: String, question: String, answer: String): CardModel {
-        return dbWriter.addCard(title, question, answer)
+    override fun getCardList(): Observable<MutableList<CardModel>> {
+        return Observable.just(dbReader.open())
     }
 
-    fun editCard(card: CardModel, title: String, question: String, answer: String): CardModel {
-        return dbWriter.editCard(card, title, question, answer)
+    override fun addCard(title: String, question: String, answer: String): Observable<CardModel> {
+        return Observable.just(dbWriter.addCard(title, question, answer))
     }
 
-    fun getCard(position: Int): CardModel {
-        return dbReader.getPosition(position)
+    override fun editCard(
+        card: CardModel,
+        title: String,
+        question: String,
+        answer: String
+    ): Observable<CardModel> {
+        return Observable.just(dbWriter.editCard(card, title, question, answer))
     }
 
-    fun getCardList(): MutableList<CardModel> {
-        cards.clear()
-        cards.addAll(dbReader.open())
-        return cards
+    override fun getCard(position: Int): Observable<CardModel> {
+        return Observable.just(dbReader.getPosition(position))
     }
 
-    fun deleteCard(card: CardModel) {
+    override fun deleteCard(card: CardModel) {
         dbWriter.deleteCard(card)
     }
 
