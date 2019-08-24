@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     tools:context=".activities.TestActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,23 +13,31 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <TextView
-        android:id="@+id/test_title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/test_toolbar"
-        android:layout_centerHorizontal="true"
+    <androidx.cardview.widget.CardView
+        android:layout_centerVertical="true"
         android:layout_margin="16dp"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/test_question_text"
-        style="@style/TestActivityTextStyle" />
+        <TextView
+            android:id="@+id/test_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="Заголовок"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/test_answer_text"
-        style="@style/TestActivityTextStyle"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/test_question_text"
+            tools:text="Здесь располагается текст вопроса, на который нужно ответить в уме"
+            style="@style/TestActivityTextStyle" />
+
+        <TextView
+            android:id="@+id/test_answer_text"
+            style="@style/TestActivityTextStyle"
+            android:visibility="gone" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/test_show_answer_button"
