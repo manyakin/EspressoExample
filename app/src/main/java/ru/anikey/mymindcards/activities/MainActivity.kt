@@ -2,9 +2,10 @@ package ru.anikey.mymindcards.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.anikey.mymindcards.R
 import ru.anikey.mymindcards.adapters.CardListAdapter
@@ -23,13 +25,13 @@ import ru.anikey.mymindcards.presenters.MainPresenter
 import ru.anikey.mymindcards.utils.*
 import ru.anikey.mymindcards.views.MainView
 
+
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
+    private lateinit var mFab: FloatingActionButton
     private lateinit var mProgressBar: ProgressBar
     private lateinit var mRecyclerView: CustomRecyclerView
     private lateinit var mAdapter: CardListAdapter
-    private lateinit var mAddCardButton: Button
-    private lateinit var mStartTestButton: Button
     private lateinit var mEmptyView: TextView
 
     @InjectPresenter
@@ -47,6 +49,12 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     override fun onDestroy() {
         mPresenter.dispose()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_toolbar_menu, menu)
+        return true
     }
 
     /**
@@ -119,7 +127,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
                 RESULT_EDIT -> {
                     data?.let {
                         mAdapter.updateCard(
-                            it.getParcelableExtra(ARG_CARD),
+                            it.getParcelableExtra(ARG_CARD)!!,
                             it.getIntExtra(ARG_POSITION, 0)
                         )
                     }
@@ -127,7 +135,7 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
                 RESULT_ADD -> {
                     data?.let {
                         mAdapter.insertCard(
-                            it.getParcelableExtra(ARG_CARD)
+                            it.getParcelableExtra(ARG_CARD)!!
                         )
                     }
                 }
@@ -135,10 +143,16 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.main_bottom_menu_add) {
+            mPresenter.addButtonPressed()
+        }
+        return true
+    }
+
     override fun onClick(itemView: View) {
         when (itemView.id) {
-            R.id.main_add_card_btn -> mPresenter.addButtonPressed()
-            R.id.main_start_test_btn -> mPresenter.startTestPressed()
+            R.id.main_fab -> mPresenter.startTestPressed()
         }
     }
 
@@ -152,14 +166,12 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mToolbar = main_toolbar
         setSupportActionBar(mToolbar)
 
+        mFab = main_fab
         mProgressBar = main_progress_bar
         mRecyclerView = main_card_list
-        mAddCardButton = main_add_card_btn
-        mStartTestButton = main_start_test_btn
         mEmptyView = main_empty_text
 
-        mAddCardButton.setOnClickListener(this)
-        mStartTestButton.setOnClickListener(this)
+        mFab.setOnClickListener(this)
     }
 
     private fun initAdapter() {
@@ -169,5 +181,12 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) mFab.hide()
+                else mFab.show()
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 }
