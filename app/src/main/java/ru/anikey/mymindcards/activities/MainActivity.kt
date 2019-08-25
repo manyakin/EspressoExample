@@ -2,12 +2,10 @@ package ru.anikey.mymindcards.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
@@ -24,9 +22,9 @@ import ru.anikey.mymindcards.presenters.MainPresenter
 import ru.anikey.mymindcards.utils.*
 import ru.anikey.mymindcards.views.MainView
 
-
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
+    private lateinit var mSearchView: SearchView
     private lateinit var mFab: FloatingActionButton
     private lateinit var mAddButton: Button
     private lateinit var mProgressBar: ProgressBar
@@ -49,6 +47,30 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     override fun onDestroy() {
         mPresenter.dispose()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
+        mSearchView = menu.findItem(R.id.main_toolbar_search).actionView as SearchView
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                mAdapter.filter(query!!)
+                return true
+            }
+        })
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (!mSearchView.isIconified) {
+            mSearchView.isIconified = true
+        } else {
+            super.onBackPressed()
+        }
     }
 
     /**

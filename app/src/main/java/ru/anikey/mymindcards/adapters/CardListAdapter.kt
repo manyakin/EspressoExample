@@ -14,30 +14,43 @@ class CardListAdapter(private val mainView: MainView) :
     RecyclerView.Adapter<CardListAdapter.CardListVH>() {
 
     private val mCardList: MutableList<CardModel> = LinkedList()
+    private val mFilteredList: MutableList<CardModel> = LinkedList()
+
+    fun filter(query: String) {
+        mFilteredList.clear()
+        mCardList.forEach { card ->
+            if (card.title.contains(query, ignoreCase = true)
+                || card.question.contains(query, ignoreCase = true)
+            ) {
+                mFilteredList.add(card)
+            }
+        }
+        notifyDataSetChanged()
+    }
 
     fun setData(newCards: List<CardModel>) {
         mCardList.clear()
         mCardList.addAll(newCards)
-        notifyDataSetChanged()
+        filter(query = "")
     }
 
     fun insertCard(card: CardModel) {
-        mCardList.add(card)
+        mFilteredList.add(card)
         notifyItemInserted(mCardList.lastIndex)
     }
 
     fun updateCard(newCard: CardModel, position: Int) {
-        mCardList[position] = newCard
+        mFilteredList[position] = newCard
         notifyItemChanged(position)
     }
 
     fun deleteCard(position: Int) {
-        mCardList.removeAt(position)
+        mFilteredList.removeAt(position)
         notifyItemRemoved(position)
     }
 
     override fun getItemId(position: Int): Long {
-        return mCardList[position].id
+        return mFilteredList[position].id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardListVH {
@@ -48,7 +61,7 @@ class CardListAdapter(private val mainView: MainView) :
     }
 
     override fun getItemCount(): Int {
-        return mCardList.count()
+        return mFilteredList.count()
     }
 
     override fun onBindViewHolder(holder: CardListVH, position: Int) {
@@ -61,13 +74,13 @@ class CardListAdapter(private val mainView: MainView) :
         private val description = itemView.card_text
 
         fun bind(position: Int) {
-            title.text = mCardList[position].title
-            description.text = mCardList[position].question
+            title.text = mFilteredList[position].title
+            description.text = mFilteredList[position].question
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(view: View) {
-            mainView.showPopup(view, adapterPosition, mCardList[adapterPosition])
+            mainView.showPopup(view, adapterPosition, mFilteredList[adapterPosition])
         }
     }
 }
