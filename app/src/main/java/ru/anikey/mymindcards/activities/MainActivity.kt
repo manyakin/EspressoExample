@@ -2,10 +2,9 @@ package ru.anikey.mymindcards.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +28,7 @@ import ru.anikey.mymindcards.views.MainView
 class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     private lateinit var mToolbar: Toolbar
     private lateinit var mFab: FloatingActionButton
+    private lateinit var mAddButton: Button
     private lateinit var mProgressBar: ProgressBar
     private lateinit var mRecyclerView: CustomRecyclerView
     private lateinit var mAdapter: CardListAdapter
@@ -49,12 +49,6 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
     override fun onDestroy() {
         mPresenter.dispose()
         super.onDestroy()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_toolbar_menu, menu)
-        return true
     }
 
     /**
@@ -143,16 +137,10 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.main_bottom_menu_add) {
-            mPresenter.addButtonPressed()
-        }
-        return true
-    }
-
     override fun onClick(itemView: View) {
         when (itemView.id) {
             R.id.main_fab -> mPresenter.startTestPressed()
+            R.id.main_add_card_button -> mPresenter.addButtonPressed()
         }
     }
 
@@ -167,11 +155,13 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         setSupportActionBar(mToolbar)
 
         mFab = main_fab
+        mAddButton = main_add_card_button
         mProgressBar = main_progress_bar
         mRecyclerView = main_card_list
         mEmptyView = main_empty_text
 
         mFab.setOnClickListener(this)
+        mAddButton.setOnClickListener(this)
     }
 
     private fun initAdapter() {

@@ -36,5 +36,6 @@
     <string name="main_empty_text">Список карточек пуст</string>
     <string name="main_no_cards_for_test">Сначала нужно добавить карточки</string>
     <string name="menu_add">Добавить</string>
+    <string name="main_add_card">Добавить карточку</string>
 
 </resources>
