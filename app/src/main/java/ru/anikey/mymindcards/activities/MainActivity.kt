@@ -1,5 +1,6 @@
 package ru.anikey.mymindcards.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -91,6 +92,16 @@ class MainActivity : MvpAppCompatActivity(), MainView, View.OnClickListener {
         mRecyclerView.setEmptyView(mEmptyView)
     }
 
+    override fun showAnswer(card: CardModel) {
+        val builder = AlertDialog.Builder(this)
+        val alert = builder.setTitle("Ответ:")
+            .setMessage(card.answer)
+            .setCancelable(false)
+            .setNegativeButton("Ok") { dialog, _ ->
+                dialog.cancel()
+            }.create()
+        alert.show()
+    }
 
     override fun startAddCardActivity() {
         val intent = Intent(this, AddCardActivity::class.java)

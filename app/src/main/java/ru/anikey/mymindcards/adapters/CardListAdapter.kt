@@ -69,7 +69,8 @@ class CardListAdapter(private val mainView: MainView) :
     }
 
     inner class CardListVH(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
+        View.OnClickListener, View.OnLongClickListener {
+
         private val title = itemView.card_title
         private val description = itemView.card_text
 
@@ -77,10 +78,16 @@ class CardListAdapter(private val mainView: MainView) :
             title.text = mFilteredList[position].title
             description.text = mFilteredList[position].question
             itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
         }
 
         override fun onClick(view: View) {
+            mainView.showAnswer(mFilteredList[adapterPosition])
+        }
+
+        override fun onLongClick(view: View): Boolean {
             mainView.showPopup(view, adapterPosition, mFilteredList[adapterPosition])
+            return true
         }
     }
 }
