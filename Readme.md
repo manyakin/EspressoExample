@@ -8,10 +8,10 @@
 
 #### 2. Run tests
 ```
-./gradlew connectedAndroidTest
+gradle connectedAndroidTest
 ```
 #### 3. Report generation 
 ```
-open EspressoExample/app/build/reports/androidTests/connected/index.html
+open /app/build/reports/androidTests/connected/index.html
 ```
 
