@@ -5,8 +5,6 @@ jdk: oraclejdk8
 
 android:
   components:
-    - build-tools-29.0.2
-    - android-29
     - add-on
     - extra
     - extra-android-m2repository
@@ -15,6 +13,11 @@ android:
     - 'android-sdk-preview-license-e6a904e8'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-29"
+  - yes | sdkmanager "build-tools;29.0.2"
 
 before_script:
   - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a -c 100M
