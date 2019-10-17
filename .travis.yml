@@ -1,35 +1,41 @@
-jdk: oraclejdk8
 language: android
-
-android:
-  components:
-  - tools
-  - platform-tools
-  - tools
-  - extra-android-support
-  - android-$ANDROID_API_LEVEL
-  - android-$ANDROID_EMU_API_LEVEL
-  - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-  - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
+sudo: required
+jdk: oraclejdk8
 
 env:
   global:
-  - QEMU_AUDIO_DRV=none
   - ANDROID_API_LEVEL=29
-  - ADB_INSTALL_TIMEOUT=10
   - ANDROID_BUILD_TOOLS_VERSION=29.0.2
-  matrix:
-    - ANDROID_TARGET=android-25 ANDROID_ABI=armeabi-v7a
-   
+  - ANDROID_ABI=armeabi-v7a
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - extra-android-m2repository
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 before_install:
- - chmod +x gradlew
- 
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-29"
+  - yes | sdkmanager "build-tools;29.0.2"
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
+
 before_script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-  
+  - chmod +x gradlew
+
 script:
- - android list targets
- - ./gradlew connectedAndroidTest
+  - ./gradlew connectedAndroidTest
