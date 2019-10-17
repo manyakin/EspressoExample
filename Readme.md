@@ -1,4 +1,4 @@
-# Espresso Example
+# Espresso Example [![Travis](https://travis-ci.org/manyakin/EspressoExample.svg?branch=master "Travis")](https://travis-ci.org/manyakin/EspressoExample/builds)
 > Simple example for displaying espresso automation skills
 
 ## How to use
